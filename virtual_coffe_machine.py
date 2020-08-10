@@ -6,6 +6,12 @@ def coffee_maker(cups):
     Cups can be adjusted by how much it is necessary to make the specified amount of coffee
     :param cups:
     :return: return a string with the variables multiplied with the parameter
+
+
+    coffee_maker(125)
+        print(f"{24000} ml of water
+        {6250} ml of milk
+        {1875} g of coffee beans")
     '''
     water = 200 * cups
     milk = 50 * cups
