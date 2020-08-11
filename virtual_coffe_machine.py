@@ -112,8 +112,8 @@ def remaining_ingredients(water, milk, bean):
 
 def main():
     global money_machine
-
     flag = True
+
     while flag:
         starter_menu = input("Write action (buy, fill, take, remaining, exit):\n")
 
@@ -123,53 +123,31 @@ def main():
                 input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:\n"))
 
             if type_coffee == str(1):
-
                 espresso(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-                # coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+
             elif type_coffee == str(2):
-
                 latte(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-                # coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-            elif type_coffee == str(3):
 
+            elif type_coffee == str(3):
                 cappuccino(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-                # coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+
             elif type_coffee == "back":
                 format()
                 main()
 
         elif starter_menu == FILL:
             fill_machine(water_machine, milk_machine, bean_machine, cups_machine)
-            # coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+
         elif starter_menu == TAKE:
             format()
             print(f"I gave you ${money_machine}\n")
             money_machine -= money_machine
-            # coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+
         elif starter_menu == REMAINING:
             format()
             coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
 
         elif starter_menu == EXIT:
             sys.exit()
-
+            
 main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
