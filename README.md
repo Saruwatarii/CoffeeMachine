@@ -11,7 +11,7 @@ Starter menu : (buy, fill, take, remaining, exit)
 note: If the user regret to buy a coffe, in the menu have a back option which goes back to the starting menu.
 "What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:
 
-##Actions##
+##### Actions
 - buy: Can choose between 3 types of coffe(eapresso, latte and cappuccino)
 - fill: Fill the coffee machine with supplies as mention above.
 - take : Take the cash from the coffee machine.
@@ -36,6 +36,7 @@ Write action (buy, fill, take, remaining, exit):
 
 What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:
 > 2
+
 I have enough resources, making you a coffee!
 
 Write action (buy, fill, take, remaining, exit):
@@ -53,6 +54,7 @@ Write action (buy, fill, take, remaining, exit):
 
 What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:
 > 2
+
 Sorry, not enough water!
 
 Write action (buy, fill, take, remaining, exit):
@@ -60,10 +62,13 @@ Write action (buy, fill, take, remaining, exit):
 
 Write how many ml of water do you want to add:
 > 1000
+
 Write how many ml of milk do you want to add:
 > 0
+
 Write how many grams of coffee beans do you want to add:
 > 0
+
 Write how many disposable cups of coffee do you want to add:
 > 0
 
@@ -82,6 +87,7 @@ Write action (buy, fill, take, remaining, exit):
 
 What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:
 > 2
+
 I have enough resources, making you a coffee!
 
 Write action (buy, fill, take, remaining, exit):
