@@ -42,12 +42,14 @@ water = 200
 milk = 50
 coffee_beans = 15
 '''
+# Default coffee machine settings
 water_machine = 400
 milk_machine = 540
 bean_machine = 120
 cups_machine = 9
 money_machine = 550
 
+# Cost of different types of coffee
 espresso = 4
 latte = 7
 cappuccino = 6
@@ -75,8 +77,8 @@ if starter_menu == "buy":
     else:
         money_machine += cappuccino
         water_machine = water_machine - 200
-        milk_machine = 100
-        bean_machine = 120
+        milk_machine = water_machine - 100
+        bean_machine = bean_machine -12
         cups_machine = cups_machine - 1
         print()
         coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
