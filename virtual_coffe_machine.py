@@ -1,35 +1,10 @@
-'''
-def coffee_maker(cups):
+import sys
 
-    (int) --> str(int, int, int)
-
-    Cups gets calculated with multiplication with water, milk and coffee_beans.
-    Cups can be adjusted by how much it is necessary to make the specified amount of coffee
-    :param cups:
-    :return: return a string with the variables multiplied with the parameter
-
-
-    coffee_maker(125)
-        print(f"{24000} ml of water
-        {6250} ml of milk
-        {1875} g of coffee beans")
-
-    water = 200 * cups
-    milk = 50 * cups
-    coffee_beans = 15 * cups
-
-    print(f"{water} ml of water\n{milk} ml of milk\n{coffee_beans} g of coffee beans")
-
-coffee_user = int(input("Write how many cups of coffee you will need: "))
-
-print(f"For {coffee_user} of coffee you will need: ")
-
-coffee_maker(coffee_user)
-'''
-#-------------------------------------------------------------------------------------------------------
 BUY = "buy"
 FILL = "fill"
 TAKE = "take"
+REMAINING = "remaining"
+EXIT = "exit"
 
 # Default coffee machine settings
 water_machine = 400
@@ -38,53 +13,82 @@ bean_machine = 120
 cups_machine = 9
 money_machine = 550
 
+def enough_coffe():
+    print("I have enough resources, making you a coffee!")
+
 def format():
     print()
 
 def coffe_overview(water, milk, bean, cup, money):
-    print(f"The coffee machine has:\n"
-          f"{water_machine} of water\n"
-          f"{milk_machine} of milk\n"
-          f"{bean_machine} of coffee beans\n"
-          f"{cups_machine} of disposable cups\n"
-          f"{money_machine} of money\n")
-
+    if money != 0:
+        print(f"The coffee machine has:\n"
+              f"{water_machine} of water\n"
+              f"{milk_machine} of milk\n"
+              f"{bean_machine} of coffee beans\n"
+              f"{cups_machine} of disposable cups\n"
+              f"${money_machine} of money\n")
+    else:
+        print(f"The coffee machine has:\n"
+              f"{water_machine} of water\n"
+              f"{milk_machine} of milk\n"
+              f"{bean_machine} of coffee beans\n"
+              f"{cups_machine} of disposable cups\n"
+              f"{money_machine} of money\n")
 
 def espresso(water, milk, bean, cups, money):
     espresso = 4
     global money_machine, water_machine, bean_machine, cups_machine, milk_machine
-    money_machine+= espresso
-    water_machine = water_machine - 250
-    bean_machine = bean_machine - 16
-    cups_machine = cups_machine - 1
-    format()
+    if water_machine >= 250 and bean_machine >= 16:
+        water_machine = water_machine - 250
+        bean_machine = bean_machine - 16
+        cups_machine = cups_machine - 1
+        money_machine += espresso
+
+        enough_coffe()
+        format()
+    else:
+        remaining_ingredients(water, milk, bean)
+        format()
 
 def latte(water, milk, bean, cups, money):
     latte = 7
     global money_machine, water_machine, bean_machine, cups_machine, milk_machine
-    money_machine+= latte
-    water_machine = water_machine - 350
-    milk_machine = milk_machine - 75
-    bean_machine = bean_machine - 12
-    cups_machine = cups_machine - 1
-    format()
+    if water_machine >= 350 and milk_machine >= 75 and bean_machine >= 12:
+        water_machine = water_machine - 350
+        milk_machine = milk_machine - 75
+        bean_machine = bean_machine - 12
+        cups_machine = cups_machine - 1
+        money_machine += latte
+
+        enough_coffe()
+        format()
+    else:
+        remaining_ingredients(water, milk, bean)
+        format()
 
 def cappuccino(water, milk, bean, cups, money):
     cappuccino = 6
     global money_machine, water_machine, bean_machine, cups_machine, milk_machine
-    money_machine+= cappuccino
-    water_machine = water_machine - 200
-    milk_machine = water_machine - 100
-    bean_machine = bean_machine - 12
-    cups_machine = cups_machine - 1
-    format()
+    if water_machine >= 200 and milk_machine >= 100 and bean_machine >= 12:
+        water_machine = water_machine - 200
+        milk_machine = milk_machine - 100
+        bean_machine = bean_machine - 12
+        cups_machine = cups_machine - 1
+        money_machine += cappuccino
+
+        enough_coffe()
+        format()
+    else:
+        remaining_ingredients(water, milk, bean)
+        format()
 
 def fill_machine(water, milk, beans, cups):
     global water_machine, bean_machine, cups_machine, milk_machine
-    water_container = int(input("Write how many ml of water do you want to add: "))
-    milk_container = int(input("Write how many ml of milk do you want to add: "))
-    coffee_beans_container = int(input("Write how many grams of coffee beans do you want to add: "))
-    disposable_cups = int(input("Write how many disposable cups of coffee do you want to add: "))
+    format()
+    water_container = int(input("Write how many ml of water do you want to add:\n"))
+    milk_container = int(input("Write how many ml of milk do you want to add:\n"))
+    coffee_beans_container = int(input("Write how many grams of coffee beans do you want to add:\n"))
+    disposable_cups = int(input("Write how many disposable cups of coffee do you want to add:\n"))
 
     water_machine += water_container
     milk_machine += milk_container
@@ -92,52 +96,76 @@ def fill_machine(water, milk, beans, cups):
     cups_machine += disposable_cups
     format()
 
-coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+def remaining_ingredients(water, milk, bean):
+    if water <= 249:
+        print(f"Sorry, not enough water!")
+        format()
+        main()
+    elif milk <= 74:
+        print(f"Sorry, not enough milk!")
+        main()
+        format()
+    elif bean <= 11:
+        print(f"Sorry, not enough coffee beans!")
+        format()
+        main()
+
 def main():
     global money_machine
+
     flag = True
     while flag:
-        starter_menu = input("Write action (buy, fill, take): ").lower()
+        starter_menu = input("Write action (buy, fill, take, remaining, exit):\n")
 
         if starter_menu == BUY:
-            type_coffee = int(input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:"))
+            format()
+            type_coffee = (
+                input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino, back - to main menu:\n"))
 
-            if type_coffee == 1:
+            if type_coffee == str(1):
+
                 espresso(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-                coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-            elif type_coffee == 2:
+                # coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+            elif type_coffee == str(2):
+
                 latte(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-                coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-            else:
+                # coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+            elif type_coffee == str(3):
+
                 cappuccino(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-                coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+                # coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+            elif type_coffee == "back":
+                format()
+                main()
 
         elif starter_menu == FILL:
             fill_machine(water_machine, milk_machine, bean_machine, cups_machine)
-            coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+            # coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
         elif starter_menu == TAKE:
+            format()
             print(f"I gave you ${money_machine}\n")
             money_machine -= money_machine
+            # coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+        elif starter_menu == REMAINING:
+            format()
             coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+
+        elif starter_menu == EXIT:
+            sys.exit()
 
 main()
 
-'''
-many_cups_coffee = int(input("Write how many cups of coffee you will need: "))
-# How many cups of each ingredient its in the container
-water_cup =  water_container // water
-milk_cup = milk_container // milk
-coffe_bean_cup = coffee_beans_container // coffee_beans
-# Find the total cup of coffee from ingredients
-possible_coffee_cups = min(water_cup, milk_cup, coffe_bean_cup)
 
-if possible_coffee_cups < many_cups_coffee:
-    print(f"No, I can make only {possible_coffee_cups} cups of coffee")
-elif possible_coffee_cups == many_cups_coffee:
-    print("Yes, I can make that amount of coffee")
-else:
-    print(f"Yes, I can make that amount of coffee (and even {possible_coffee_cups - many_cups_coffee} more than that)")
-'''
+
+
+
+
+
+
+
+
+
+
 
 
 
