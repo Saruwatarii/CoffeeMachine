@@ -27,7 +27,19 @@ print(f"For {coffee_user} of coffee you will need: ")
 coffee_maker(coffee_user)
 '''
 #-------------------------------------------------------------------------------------------------------
+BUY = "buy"
+FILL = "fill"
+TAKE = "take"
 
+# Default coffee machine settings
+water_machine = 400
+milk_machine = 540
+bean_machine = 120
+cups_machine = 9
+money_machine = 550
+
+def format():
+    print()
 
 def coffe_overview(water, milk, bean, cup, money):
     print(f"The coffee machine has:\n"
@@ -37,54 +49,38 @@ def coffe_overview(water, milk, bean, cup, money):
           f"{cups_machine} of disposable cups\n"
           f"{money_machine} of money\n")
 
-'''
-water = 200
-milk = 50
-coffee_beans = 15
-'''
-# Default coffee machine settings
-water_machine = 400
-milk_machine = 540
-bean_machine = 120
-cups_machine = 9
-money_machine = 550
 
-# Cost of different types of coffee
-espresso = 4
-latte = 7
-cappuccino = 6
+def espresso(water, milk, bean, cups, money):
+    espresso = 4
+    global money_machine, water_machine, bean_machine, cups_machine, milk_machine
+    money_machine+= espresso
+    water_machine = water_machine - 250
+    bean_machine = bean_machine - 16
+    cups_machine = cups_machine - 1
+    format()
 
-coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-starter_menu = input("Write action (buy, fill, take): ").lower()
+def latte(water, milk, bean, cups, money):
+    latte = 7
+    global money_machine, water_machine, bean_machine, cups_machine, milk_machine
+    money_machine+= latte
+    water_machine = water_machine - 350
+    milk_machine = milk_machine - 75
+    bean_machine = bean_machine - 12
+    cups_machine = cups_machine - 1
+    format()
 
-if starter_menu == "buy":
-    type_coffee = int(input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:"))
-    if type_coffee == 1:
-        money_machine += espresso
-        water_machine = water_machine - 250
-        bean_machine = bean_machine - 16
-        cups_machine = cups_machine - 1
-        print()
-        coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-    elif type_coffee == 2:
-        money_machine += latte
-        water_machine = water_machine - 350
-        milk_machine = milk_machine - 75
-        bean_machine = bean_machine - 12
-        cups_machine = cups_machine - 1
-        print()
-        coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
-    else:
-        money_machine += cappuccino
-        water_machine = water_machine - 200
-        milk_machine = water_machine - 100
-        bean_machine = bean_machine -12
-        cups_machine = cups_machine - 1
-        print()
-        coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+def cappuccino(water, milk, bean, cups, money):
+    cappuccino = 6
+    global money_machine, water_machine, bean_machine, cups_machine, milk_machine
+    money_machine+= cappuccino
+    water_machine = water_machine - 200
+    milk_machine = water_machine - 100
+    bean_machine = bean_machine - 12
+    cups_machine = cups_machine - 1
+    format()
 
-
-elif starter_menu == "fill":
+def fill_machine(water, milk, beans, cups):
+    global water_machine, bean_machine, cups_machine, milk_machine
     water_container = int(input("Write how many ml of water do you want to add: "))
     milk_container = int(input("Write how many ml of milk do you want to add: "))
     coffee_beans_container = int(input("Write how many grams of coffee beans do you want to add: "))
@@ -94,15 +90,37 @@ elif starter_menu == "fill":
     milk_machine += milk_container
     bean_machine += coffee_beans_container
     cups_machine += disposable_cups
+    format()
 
-    coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+def main():
+    global money_machine
+    flag = True
+    while flag:
+        starter_menu = input("Write action (buy, fill, take): ").lower()
 
-elif starter_menu == "take":
-    print(f"I gave you ${money_machine}\n")
-    money_machine -= money_machine
-    coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+        if starter_menu == BUY:
+            type_coffee = int(input("What do you want to buy? 1 - espresso, 2 - latte, 3 - cappuccino:"))
 
+            if type_coffee == 1:
+                espresso(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+                coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+            elif type_coffee == 2:
+                latte(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+                coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+            else:
+                cappuccino(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+                coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
 
+        elif starter_menu == FILL:
+            fill_machine(water_machine, milk_machine, bean_machine, cups_machine)
+            coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+        elif starter_menu == TAKE:
+            print(f"I gave you ${money_machine}\n")
+            money_machine -= money_machine
+            coffe_overview(water_machine, milk_machine, bean_machine, cups_machine, money_machine)
+
+main()
 
 '''
 many_cups_coffee = int(input("Write how many cups of coffee you will need: "))
