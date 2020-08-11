@@ -149,5 +149,5 @@ def main():
 
         elif starter_menu == EXIT:
             sys.exit()
-            
+
 main()
